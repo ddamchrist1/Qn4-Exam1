@@ -5,10 +5,6 @@ date: "10/18/2021"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ## Using the BRFSS dataset located at "https://github.com/kijohnson/ADA-Fall-2021/blob/master/BRFSS2017_10percent_v.csv",  a) import the dataset and show your code,  write code to b) determine median heights for each sex (males and females) and, c) make a plot to examine median differences in height by sex. Report the median heights and upload a PDF or picture of your plot.
 
 ```{r}
@@ -57,3 +53,19 @@ ggplot(data = na.omit(BRFSS2017), aes(x = SEX, y = ht_meters)) +
     geom_boxplot() +
   labs(x = "SEX", y = "Height (meters)",  title = "Boxplot for Sex and Height")
 ```
+
+
+
+#Question 4 
+#a. Put the version of the code file that you wrote that includes annotation for what each step does in a Github repository (you can use the one previously created in class or for your homework or create a new one).
+
+#b. Next add code to determine the mean height in females and males. Save this new version and resubmit the new version to your Github repository.
+
+#c. Provide a link to your Github repository containing the code file for review.
+```{r}
+#Determining the mean values for both Male and Female participants using the mean function
+mean( BRFSS2017$ht_meters[BRFSS2017$SEX=="Male"], na.rm=TRUE ) #1.781511
+mean( BRFSS2017$ht_meters[BRFSS2017$SEX=="Female"], na.rm=TRUE ) #1.631513
+
+```
+
