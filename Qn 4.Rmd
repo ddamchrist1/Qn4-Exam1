@@ -1,0 +1,59 @@
+---
+title: "Questions 3 and 4"
+author: "Christopher"
+date: "10/18/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Using the BRFSS dataset located at "https://github.com/kijohnson/ADA-Fall-2021/blob/master/BRFSS2017_10percent_v.csv",  a) import the dataset and show your code,  write code to b) determine median heights for each sex (males and females) and, c) make a plot to examine median differences in height by sex. Report the median heights and upload a PDF or picture of your plot.
+
+```{r}
+#Question 3a) import the dataset and show your code
+
+library(haven) #This program is for reading the file from the specified link from github
+library("foreign")
+library(readr) #for reading csv file (read_csv())
+## importing data from a csv file to r
+BRFSS2017 <- read_csv("https://github.com/kijohnson/ADA-Fall-2021/blob/master/BRFSS2017_10percent_v.csv?raw=true") 
+
+#knowing the variable type for both sex and height
+class(BRFSS2017$SEX)
+class(BRFSS2017$ht_meters)
+
+#install.packages("tidyverse")
+library(tidyverse)
+library(dplyr)
+
+# conducting data management for the sex and height in meters
+#Summarizing sex to assess the distribution and see if there are any unusual values in the data
+summary(BRFSS2017$SEX)
+
+#recode sex as a factor variable
+BRFSS2017$SEX<-factor(BRFSS2017$SEX, 
+                      levels = c(1, 2), 
+                      labels = c("Male", "Female"))
+
+#summary of the recoded sex variable
+table(na.omit(BRFSS2017$SEX))
+
+#Assessing height distribution.
+summary(BRFSS2017$ht_meters)
+
+
+#Question 3b) Determining the median for each of the sex groups
+summary( BRFSS2017$ht_meters[BRFSS2017$SEX=="Male"], na.rm=TRUE )
+median( BRFSS2017$ht_meters[BRFSS2017$SEX=="Male"], na.rm=TRUE )
+
+summary( BRFSS2017$ht_meters[BRFSS2017$SEX=="Female"], na.rm=TRUE )
+median( BRFSS2017$ht_meters[BRFSS2017$SEX=="Female"], na.rm=TRUE )
+
+
+#Question 3c) Examining median differences in height by sex using the boxplot
+ggplot(data = na.omit(BRFSS2017), aes(x = SEX, y = ht_meters)) +
+    geom_boxplot() +
+  labs(x = "SEX", y = "Height (meters)",  title = "Boxplot for Sex and Height")
+```
